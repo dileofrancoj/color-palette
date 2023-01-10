@@ -10,4 +10,4 @@ La capa de entrada recibe (rgb) mapeados entre 0 y 1 y la respuesta serça un va
 
 ## Github site
 
-[https://dileofrancoj.github.io/color-palette/](Sitio online)
+[Sitio online](https://dileofrancoj.github.io/color-palette)
