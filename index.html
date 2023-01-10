@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La web menos tonta</title>
+    <style type="text/css">
+      #site {
+        padding: 5rem;
+        font-size: 5rem;
+        margin-left: 15rem;
+      }
+    </style>
+  </head>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"
+  ></script>
+  <script src="https://unpkg.com/brain.js"></script>
+  <!-- This library adds one hidden layer to the neural network-->
+  <script type="text/javascript">
+    const network = new brain.NeuralNetwork();
+    network.train([
+      { input: { r: 0, g: 0, b: 0 }, output: { color: 1 } },
+      { input: { r: 1, g: 1, b: 1 }, output: { color: 0 } },
+      { input: { r: 0, g: 1, b: 0 }, output: { color: 0 } },
+      { input: { r: 0, g: 0, b: 1 }, output: { color: 1 } },
+    ]);
+
+    function update(color) {
+      var rgb = [
+        parseInt(color.channels.r),
+        parseInt(color.channels.g),
+        parseInt(color.channels.b),
+      ];
+      const input = {
+        r: rgb[0] / 255,
+        g: rgb[1] / 255,
+        b: rgb[2] / 255,
+      };
+      const result = network.run(input);
+      let c;
+
+      if (result.color > 0.5) {
+        c = "white";
+      } else {
+        c = "black";
+      }
+      var div = document.querySelector("#site");
+      const backgroundColor =
+        "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+
+      div.style.background = backgroundColor; //Nueva forma para poner el color de fondo
+      div.style.color = c;
+    }
+  </script>
+  <body>
+    <input data-jscolor="{value:'#FFF'}" , onInput="update(this.jscolor)" />
+    <div id="site">My website palette</div>
+  </body>
+</html>
